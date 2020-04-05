@@ -181,6 +181,12 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
+	_hw1_sleep\
+	_hw1_uptime\
+	_hw1_pingpong\
+	_hw1_primes\
+	_hw1_find\
+	_hw1_xargs\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
@@ -251,6 +257,12 @@ EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	printf.c umalloc.c\
+	hw1_sleep.c\
+	hw1_uptime.c\
+	hw1_pingpong.c\
+	hw1_primes.c\
+	hw1_find.c\
+	hw1_xargs.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
 
