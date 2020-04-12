@@ -55,12 +55,17 @@ kr_free(void *addr) {
 
     struct header *curr;
     struct header *h = (struct header *)addr - 1; // point to block header
-    for (curr=free_list; h <= curr || h >= curr->next; curr = curr->next) {
+
+    // 找到插入位置，可能是：
+    // * curr <= h <= curr->next 的位置
+    // * 链表头或尾的位置
+    for (curr=free_list; !(h > curr && h < curr->next); curr = curr->next) {
         if (curr >= curr->next && (h > curr || h < curr->next)) {
             break; /* freed block at start or end of the arena */
         }
     }
 
+    // h 与 curr->next 是否能合并
     if (h + h->size == curr->next) { /* join to upper neighbor */
         h->size += curr->next->size;
         h->next = curr->next->next;
@@ -68,6 +73,7 @@ kr_free(void *addr) {
         h->next = curr->next;
     }
 
+    // curr 与 h 是否能合并
     if (curr + curr->size == h) { /* join to lower neighbor */
         curr->size += h->size;
         curr->next = h->next;
